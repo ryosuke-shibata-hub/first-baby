@@ -23,4 +23,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/login', 'Auth/LoginController@login')->name('login');
+Route::namespace('Auth')->group(function() {
+    Route::get('/login', 'LoginController@login')->name('login');
+    });
