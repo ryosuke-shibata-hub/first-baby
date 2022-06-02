@@ -11,18 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Route::namespace('Auth')->group(function() {
-    Route::get('/login', 'LoginController@login')->name('login');
+
+
+Route::group(['middleware' => ['guest']], function() {
+    Route::namespace('Auth')->group(function() {
+        //ホーム画面
+        Route::get('/first-baby/top', 'LoginController@home')->name('home.top');
+        //ログイン画面、処理
+        Route::get('/login', 'LoginController@login_form')->name('login.form');
+        Route::post('/logim', 'LoginController@login')->name('login.post');
     });
+});
