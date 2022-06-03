@@ -8,7 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Http\Request;
+use Log;
 class RegisterController extends Controller
 {
     /*
@@ -31,43 +32,51 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+       public function register_form()
     {
-        $this->middleware('guest');
+        return view('Auth.register');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function register_store(Request $request)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+
+        $request->validate([
+            'accountname' => ['required','string','max:255'],
+            'user_id' => ['required','string','max:255','unique:users','regex: /^[a-zA-Z0-9-_]+$/'],
+            'email' => ['required','email','max:255','unique:users'],
+            'password' => ['required','string','max:30','min:8','same:password_confirmed'],
+            'password_confirmed' => ['required','string','max:30','min:8','same:password'],
         ]);
+
+            Log::error('バリデーションエラー');
+
+        try {
+        $user = User::create([
+            'name' => $request->accountname,
+            'user_id' => $request->user_id,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_flg' => $request->role_flg,
+            'delete_flg' => $request->delete_flg,
+        ]);
+
+            Log::error('正常に登録が完了');
+
+        // return redirect(RouteServiceProvider::HOME);
+            return redirect()->route('register.add');
+
+        } catch (\Throwable $th) {
+
+            Log::error('正常に館員登録が完了していません');
+
+            return redirect()->back()->withErrors('システムエラー')->withInput();
+        }
+
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
+    public function register_add()
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return view('Auth.register_add');
     }
+
 }

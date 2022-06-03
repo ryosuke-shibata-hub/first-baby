@@ -17,7 +17,7 @@
             <h2 class="nav-title">はじめてのあかちゃん</h2>
             <div class="button-nav">
                 <a href="{{ route('login.form') }}" class="btn btn--orange btn--cubic btn--shadow" id="button-nav-top">ログイン！</a>
-                <a href="" class="btn btn--blue btn--cubic btn--shadow" id="button-nav-top">無料館員登録はこちら！</a>
+                <a href="{{ route('register_form') }}" class="btn btn--blue btn--cubic btn--shadow" id="button-nav-top">無料会員登録はこちら！</a>
                 <a href="" class="btn btn--yellow btn--cubic btn--shadow" id="button-nav-top">ゲストログインはこちら！</a>
             </div>
         </div>

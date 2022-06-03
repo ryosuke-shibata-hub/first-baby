@@ -31,6 +31,11 @@ Route::group(['middleware' => ['guest']], function() {
         Route::get('/first-baby/top', 'LoginController@home')->name('home.top');
         //ログイン画面、処理
         Route::get('/login', 'LoginController@login_form')->name('login.form');
-        Route::post('/logim', 'LoginController@login')->name('login.post');
+        Route::post('/login/post', 'LoginController@login')->name('login.post');
+        //会員登録画面
+        Route::get('/register','RegisterController@register_form')->name('register_form');
+        Route::post('/register/post','RegisterController@register_store')->name('register.post');
+        //会員登録完了画面
+        Route::get('/register/add','RegisterController@register_add')->name('register.add');
     });
 });

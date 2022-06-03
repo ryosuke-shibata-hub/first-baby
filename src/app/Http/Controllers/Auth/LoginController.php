@@ -47,4 +47,17 @@ class LoginController extends Controller
     {
         return view('Auth.login');
     }
+
+    public function login()
+    {
+        try {
+
+            return redirect()->route();
+        } catch (\Throwable $th) {
+
+            Log::error('ログインに失敗しました');
+            return redirect()->back();
+
+        }
+    }
 }

@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/earlyaccess/kokoro.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/Auth/login.css') }}">
+    {{-- favicon --}}
+    <link rel="icon" href="{{ asset('/favicon.ico') }}">
 </head>
 <body>
     @yield('header')

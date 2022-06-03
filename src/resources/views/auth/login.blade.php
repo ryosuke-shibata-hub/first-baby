@@ -19,10 +19,10 @@
                 <form action="" method="">
                     @csrf
 
-                    <label for="" class="input-form">ログインID</label>
-                    <input type="text" class="input-form form-control">
+                    <label for="" class="input-form">ユーザーID</label>
+                    <input type="text" class="input-form form-control" name="user_id">
                     <label for="" class="input-form">パスワード</label>
-                    <input type="password" class="input-form form-control">
+                    <input type="password" class="input-form form-control" name="password">
 
                     <button type="submit" class="btn btn--orange btn--cubic btn--shadow" id="button-nav-login">
                         ログイン！
