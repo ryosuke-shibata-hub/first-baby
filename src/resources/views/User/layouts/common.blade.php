@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/earlyaccess/nikukyu.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/kokoro.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/common/common.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/Auth/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login/master.css') }}">
     {{-- favicon --}}
     <link rel="icon" href="{{ asset('/favicon.ico') }}">
 </head>

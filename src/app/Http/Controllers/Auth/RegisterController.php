@@ -32,6 +32,12 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+
+    }
+
        public function register_form()
     {
         return view('Auth.register');

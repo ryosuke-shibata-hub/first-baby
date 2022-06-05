@@ -12,17 +12,28 @@
             <img class="split-left-image" src="/image/Auth/2382857.jpg">
         </div>
     </div>
-    <div class="split-item-right">
+<div class="split-item-right">
         <div class="split-right-inner">
             <h2 class="nav-title">ログイン</h2>
+            @if(session('login_error'))
+            <h4 class="text-danger">
+                {{ session('login_error') }}
+            </h4>
+            @endif
             <div class="button-nav">
-                <form action="" method="">
+                <form action="{{ route('login.post') }}" method="POST">
                     @csrf
 
-                    <label for="" class="input-form">ユーザーID</label>
-                    <input type="text" class="input-form form-control" name="user_id">
-                    <label for="" class="input-form">パスワード</label>
-                    <input type="password" class="input-form form-control" name="password">
+                    @if($errors->has('user_id'))
+                        <span class="text-danger">{{ $errors->first('user_id') }}</span>
+                    @endif
+                        <label for="" class="input-form">ユーザーID</label>
+                        <input type="text" class="input-form form-control" name="user_id">
+                    @if($errors->has('password'))
+                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                    @endif
+                        <label for="" class="input-form">パスワード</label>
+                        <input type="password" class="input-form form-control" name="password">
 
                     <button type="submit" class="btn btn--orange btn--cubic btn--shadow" id="button-nav-login">
                         ログイン！

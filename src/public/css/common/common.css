@@ -2,7 +2,12 @@ body {
     height: 100vh;
     color: #3f3f3f;
 }
-
+a {
+    text-decoration:none !important;
+}
+ul,li {
+    list-style: none;
+}
 *,
 *:before,
 *:after {

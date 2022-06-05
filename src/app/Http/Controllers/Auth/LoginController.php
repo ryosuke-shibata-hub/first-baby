@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Log;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,6 +40,13 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
+    }
+
+    public function username()
+    {
+        //  emailの代わりに使用したいカラム名を指定する
+        return 'user_id';
     }
 
     public function home()
@@ -48,16 +59,46 @@ class LoginController extends Controller
         return view('Auth.login');
     }
 
-    public function login()
+    public function login(Request $request)
     {
+
+
+        $this->validate($request,[
+                'user_id' => ['required','string','max:255','regex: /^[a-zA-Z0-9-_]+$/'],
+                'password' => ['required','string','max:30','min:8'],
+            ]);
+
         try {
 
-            return redirect()->route();
+           if (Auth::attempt([
+               'user_id' => $request->input('user_id'),
+               'password' => $request->input('password'),
+               'delete_flg' => 0,
+               'role_flg' => 5,
+           ]));
+
+               Log::error("成功");
+                return redirect()->route('main.top');
+
+               {
+                Log::error("失敗");
+                return back();
+               }
+
         } catch (\Throwable $th) {
 
             Log::error('ログインに失敗しました');
-            return redirect()->back();
+
+            return back()
+            ->with('login_error','ログインに失敗しました。');
 
         }
+    }
+
+    public function logout() {
+
+        Auth::logout();
+
+        return redirect()->route('home.top');
     }
 }
