@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Log;
 use Illuminate\Support\Facades\Auth;
+use carbon;
 
 class LoginController extends Controller
 {
@@ -31,6 +32,8 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    protected $maxAttempts = 2;     // ログイン試行回数（回）
+    protected $decayMinutes = 5;   // ログインロックタイム（分）
 
     /**
      * Create a new controller instance.
@@ -75,15 +78,14 @@ class LoginController extends Controller
                'password' => $request->input('password'),
                'delete_flg' => 0,
                'role_flg' => 5,
-           ]));
-
-               Log::error("成功");
+           ])) {
+                Log::error("成功");
                 return redirect()->route('main.top');
-
-               {
-                Log::error("失敗");
-                return back();
-               }
+           } else {
+               Log::error("しっぱい");
+               return back()
+                ->with('login_error','*メールアドレスまたはパスワードが違います。');
+           }
 
         } catch (\Throwable $th) {
 
@@ -94,7 +96,6 @@ class LoginController extends Controller
 
         }
     }
-
     public function logout() {
 
         Auth::logout();

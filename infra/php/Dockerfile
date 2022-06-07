@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-buster
+FROM php:8.1-fpm-buster
 
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     COMPOSER_HOME=/composer
@@ -11,6 +11,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     docker-php-ext-install intl pdo_mysql zip bcmath
 
-COPY ./php.ini /usr/local/etc/php/7.4/php.ini
+COPY ./php.ini /usr/local/etc/php/8.1/php.ini
 
 WORKDIR /data
